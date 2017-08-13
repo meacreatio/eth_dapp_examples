@@ -15,12 +15,10 @@ Template.hello.onCreated(function helloOnCreated() {
 
 Template.hello.helpers({
   counter() {
-    myContract = web3.eth.contract(arrayABI).at(contractAddress);
     var template = Template.instance()
-    web3.eth.getBalance("0xf1EBFABE214Ca7fd12909e9737264f910c2a7081", function(error, result) {
-      if (!error) {
-        TemplateVar.set(template, "counter", result);
-      }
+    myContract = web3.eth.contract(arrayABI).at(contractAddress);
+    myContract.name(function(error, result) {
+      TemplateVar.set(template, "counter", result);
     })
   },
 });
