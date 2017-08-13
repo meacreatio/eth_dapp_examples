@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./node_modules/web3/dist/web3.min.js">
+
+  </script>
+</head>
+<body>
+
+  <input id="input" type="text">
+  <button id="button" name="button">Set</button>
+
+  <pre id="output">
+
+  </pre>
+
+  <script>
+    var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+
+     var fooContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"getFoo","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_foo","type":"bytes32"}],"name":"setFoo","outputs":[],"payable":false,"type":"function"}]);
+     var foo = fooContract.at('0x3af1c0e677d3a199dffc62a802212344c04ebe92');
+
+     var button = document.getElementById('button');
+     var input = document.getElementById('input');
+     var output = document.getElementById('output');
+
+     button.addEventListener('click', function() {
+       foo.setFoo(input.value);
+
+       output.innerHTML = web3.toAscii(foo.getFoo());
+     });
+  </script>
+</body>
+
+</html>
